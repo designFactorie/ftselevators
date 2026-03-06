@@ -1127,6 +1127,7 @@ body:hover .cursor {
     }
 }
 
+
 @media (max-width: 768px) {
 
     .cursor,
@@ -1161,69 +1162,131 @@ body:hover .cursor {
         padding-right: 0;
     }
 
-    /* Fix menu visibility and typography on mobile */
+    /* === CORE MOBILE LAYOUT FIX === */
+
+    /* Fix nav on mobile */
     .premium-nav {
         mix-blend-mode: normal;
-        background: rgba(5, 5, 5, 0.5);
+        background: rgba(5, 5, 5, 0.7);
         backdrop-filter: blur(10px);
-        padding: 1.5rem 5vw;
+        padding: 1.2rem 5vw;
+        align-items: center;
     }
 
+    /* Fix all massive headline text overflow */
     .massive-text {
-        font-size: 8.5vw;
-        /* Further reduced to fit "ENGINEERING" */
+        font-size: clamp(1.8rem, 10vw, 6rem);
         width: 100%;
-        letter-spacing: -2px;
-        /* Tighter for mobile */
+        letter-spacing: -1px;
+        overflow: hidden;
     }
 
-    .massive-text span {
-        width: 100%;
-        padding-right: 0;
-    }
-
+    /* THE KEY FIX: Override width:max-content on mobile */
+    .massive-text span,
+    .massive-text .line-1,
     .massive-text .line-2,
     .massive-text .line-3 {
-        padding-left: 0;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden;
+        padding-right: 0;
+        padding-left: 0 !important;
+        /* Remove desktop indentation */
+        white-space: normal;
     }
 
+    .massive-text .reveal-up {
+        white-space: normal;
+    }
+
+    /* Fix all section headings */
+    .section-title-premium {
+        font-size: clamp(1.8rem, 9vw, 4rem);
+        word-break: break-word;
+    }
+
+    /* Fix menu link visibility */
     .menu-link {
         color: var(--text-color);
         -webkit-text-stroke: 0px;
-        font-size: 8vw;
-        /* Reduced from 10vw */
+        font-size: clamp(1.5rem, 8vw, 3rem);
     }
 
     .menu-link::before {
         display: none;
     }
 
-    .section-title-premium {
-        font-size: 9vw;
-        /* Reduced from 10vw */
+    /* Fix contact links on mobile */
+    .contact-links a {
+        font-size: clamp(1rem, 4vw, 1.5rem);
     }
 
-    .about-text-block p {
-        font-size: 1.1rem;
+    /* Fix contact grid */
+    .contact-grid-premium {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    /* Fix accordion header text */
+    .accordion-header h3 {
+        font-size: clamp(1.2rem, 6vw, 2.5rem);
+    }
+
+    /* Fix about page specific inline styles - override via class */
+    .about-text-block p,
+    .intro-text p {
+        font-size: 1rem;
+        line-height: 1.6;
     }
 
     .hero-details p {
         font-size: 1rem;
     }
+
+    /* Fix about page values grid */
+    .values-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Inline font-size overrides for about.html headings */
+    .section-title-premium[style] {
+        font-size: clamp(1.5rem, 8vw, 3rem) !important;
+    }
+
+    /* Fix footer bottom flex */
+    .footer-bottom-flex {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    /* Fix submit button */
+    .submit-btn-premium {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 @media (max-width: 480px) {
     .massive-text {
-        font-size: 14vw;
-        /* Balanced for very small screens */
+        font-size: clamp(1.5rem, 12vw, 2.5rem);
     }
 
     .section-title-premium {
-        font-size: 11vw;
+        font-size: clamp(1.4rem, 10vw, 2rem);
     }
 
     .logo-text {
-        font-size: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .massive-text span,
+    .massive-text .line-1,
+    .massive-text .line-2,
+    .massive-text .line-3 {
+        width: 100% !important;
+        overflow: hidden;
     }
 }
 
