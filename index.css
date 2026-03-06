@@ -1201,8 +1201,9 @@ body:hover .cursor {
 
     /* Fix all section headings */
     .section-title-premium {
-        font-size: clamp(1.8rem, 9vw, 4rem);
-        word-break: break-word;
+        font-size: clamp(1.4rem, 6vw, 4rem);
+        word-break: normal;
+        overflow-wrap: break-word;
     }
 
     /* Fix menu link visibility */
