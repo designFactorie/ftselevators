@@ -98,7 +98,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const stickyWrapper = document.querySelector('.sticky-wrapper');
     const horizontalContainer = document.querySelector('.horizontal-scroll-container');
 
-    if (!isMobile && solutionsSection && horizontalContainer) {
+    // Use 1024px to match CSS breakpoint where layout switches to vertical
+    const isTabletOrMobile = window.matchMedia("(max-width: 1024px)").matches;
+
+    if (!isTabletOrMobile && solutionsSection && horizontalContainer) {
         // Calculate the total width to scroll
         const setupHorizontalScroll = () => {
             const scrollWidth = horizontalContainer.scrollWidth - window.innerWidth + 100; // added padding
@@ -119,7 +122,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Run after fonts/images load
         setTimeout(setupHorizontalScroll, 500);
-        window.addEventListener('resize', setupHorizontalScroll);
+        window.addEventListener('resize', () => {
+            const nowTabletOrMobile = window.matchMedia("(max-width: 1024px)").matches;
+            if (nowTabletOrMobile) {
+                // Reset height when resized to tablet/mobile
+                solutionsSection.style.height = '';
+                horizontalContainer.style.transform = '';
+            } else {
+                setupHorizontalScroll();
+            }
+        });
+    } else if (solutionsSection) {
+        // Ensure no JS-set height remains on tablet/mobile
+        solutionsSection.style.height = '';
     }
 
     // --- SERVICES ACCORDION HOVER IMAGE REVEAL ---
