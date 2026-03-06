@@ -26,7 +26,8 @@ html {
     background: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-body);
-    overflow-x: clip;
+    overflow-x: hidden;
+    /* Changed from clip for better compatibility */
     scroll-behavior: smooth;
     cursor: none;
 }
@@ -404,7 +405,8 @@ body:hover .cursor {
     transform: translateY(100%);
     transition: transform 1.5s var(--ease-out-expo);
     padding-right: 0.1em;
-    /* extra space for italicized overhang */
+    max-width: 100%;
+    /* Ensure text doesn't exceed parent width */
 }
 
 .massive-text .line-1 {
@@ -1166,29 +1168,35 @@ body:hover .cursor {
     }
 
     .massive-text {
-        font-size: 14vw;
-        /* Slightly larger for better impact on mobile */
+        font-size: 11vw;
+        /* Reduced from 14vw */
+        width: 100%;
+    }
+
+    .massive-text span {
+        width: 100%;
+        padding-right: 0;
     }
 
     .massive-text .line-2,
     .massive-text .line-3 {
         padding-left: 0;
-        /* Reset indentation on small mobile */
     }
 
     .menu-link {
         color: var(--text-color);
         -webkit-text-stroke: 0px;
-        font-size: 10vw;
+        font-size: 8vw;
+        /* Reduced from 10vw */
     }
 
     .menu-link::before {
         display: none;
-        /* Disable hover effect on mobile */
     }
 
     .section-title-premium {
-        font-size: 10vw;
+        font-size: 9vw;
+        /* Reduced from 10vw */
     }
 
     .about-text-block p {
@@ -1202,11 +1210,12 @@ body:hover .cursor {
 
 @media (max-width: 480px) {
     .massive-text {
-        font-size: 16vw;
+        font-size: 14vw;
+        /* Balanced for very small screens */
     }
 
     .section-title-premium {
-        font-size: 12vw;
+        font-size: 11vw;
     }
 
     .logo-text {
