@@ -218,7 +218,8 @@ body:hover .cursor {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    z-index: 100;
+    z-index: 1000;
+    /* Increased z-index */
     mix-blend-mode: difference;
 }
 
@@ -302,7 +303,8 @@ body:hover .cursor {
 .menu-link {
     display: inline-block;
     font-family: var(--font-heading);
-    font-size: 5vw;
+    font-size: clamp(2rem, 8vw, 5vw);
+    /* Responsive font size */
     font-weight: 700;
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
@@ -1153,6 +1155,62 @@ body:hover .cursor {
 
     .title-panel {
         padding-right: 0;
+    }
+
+    /* Fix menu visibility and typography on mobile */
+    .premium-nav {
+        mix-blend-mode: normal;
+        background: rgba(5, 5, 5, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 1.5rem 5vw;
+    }
+
+    .massive-text {
+        font-size: 14vw;
+        /* Slightly larger for better impact on mobile */
+    }
+
+    .massive-text .line-2,
+    .massive-text .line-3 {
+        padding-left: 0;
+        /* Reset indentation on small mobile */
+    }
+
+    .menu-link {
+        color: var(--text-color);
+        -webkit-text-stroke: 0px;
+        font-size: 10vw;
+    }
+
+    .menu-link::before {
+        display: none;
+        /* Disable hover effect on mobile */
+    }
+
+    .section-title-premium {
+        font-size: 10vw;
+    }
+
+    .about-text-block p {
+        font-size: 1.1rem;
+    }
+
+    .hero-details p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .massive-text {
+        font-size: 16vw;
+    }
+
+    .section-title-premium {
+        font-size: 12vw;
+    }
+
+    .logo-text {
+        font-size: 1rem;
     }
 }
 
