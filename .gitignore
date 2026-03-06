@@ -1,0 +1,14 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Development tools
+server.py
+.venv
+__pycache__/
+*.pyc
+
+# Local environment
+.env
+.cursor/
+.gemini/
