@@ -251,6 +251,8 @@ body:hover .cursor {
 .menu-toggle span {
     display: block;
     height: 2px;
+    min-height: 2px;
+    /* Force minimum height */
     background: #fff;
     transition: var(--transition-slow);
 }
@@ -1168,9 +1170,11 @@ body:hover .cursor {
     }
 
     .massive-text {
-        font-size: 11vw;
-        /* Reduced from 14vw */
+        font-size: 8.5vw;
+        /* Further reduced to fit "ENGINEERING" */
         width: 100%;
+        letter-spacing: -2px;
+        /* Tighter for mobile */
     }
 
     .massive-text span {
