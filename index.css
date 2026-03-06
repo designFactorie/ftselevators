@@ -1199,11 +1199,12 @@ body:hover .cursor {
         white-space: normal;
     }
 
-    /* Fix all section headings */
+    /* Fix all section headings - Syncopate font is wide so needs smaller size */
     .section-title-premium {
-        font-size: clamp(1.4rem, 6vw, 4rem);
+        font-size: clamp(1rem, 4.5vw, 4rem);
         word-break: normal;
         overflow-wrap: break-word;
+        letter-spacing: -0.5px;
     }
 
     /* Fix menu link visibility */
@@ -1275,7 +1276,8 @@ body:hover .cursor {
     }
 
     .section-title-premium {
-        font-size: clamp(1.4rem, 10vw, 2rem);
+        font-size: clamp(0.9rem, 4vw, 2rem);
+        letter-spacing: -0.5px;
     }
 
     .logo-text {
