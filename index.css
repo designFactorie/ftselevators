@@ -19,17 +19,20 @@
     box-sizing: border-box;
 }
 
-body,
-html {
+body {
     width: 100%;
     min-height: 100vh;
     background: var(--bg-color);
     color: var(--text-color);
     font-family: var(--font-body);
     overflow-x: hidden;
-    /* Changed from clip for better compatibility */
     scroll-behavior: smooth;
     cursor: none;
+}
+
+html {
+    width: 100%;
+    background: var(--bg-color);
 }
 
 ::selection {
@@ -93,7 +96,7 @@ body:hover .cursor {
     font-family: var(--font-heading);
     font-size: 0.95rem;
     font-weight: 700;
-    color: var(--text-color);
+    color: #ffffff;
     text-decoration: none;
     letter-spacing: 3px;
     position: relative;
@@ -135,12 +138,6 @@ body:hover .cursor {
 }
 
 /* --- UTILITIES --- */
-.inner-page .premium-nav {
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(10px);
-    mix-blend-mode: normal;
-    padding: 1.5rem 5vw;
-}
 
 .page-header {
     padding: 15vh 0 10vh;
@@ -215,13 +212,18 @@ body:hover .cursor {
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem 5vw;
+    padding: 1.5rem 5vw;
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     z-index: 1000;
-    /* Increased z-index */
-    mix-blend-mode: difference;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    mix-blend-mode: normal;
+    /* Explicitly normal to ensure background visibility */
+    transition: all 0.4s var(--ease-out-expo);
 }
 
 .logo-text {
@@ -568,8 +570,13 @@ body:hover .cursor {
 /* --- HORIZONTAL SCROLL SOLUTIONS --- */
 .solutions-horizontal {
     padding: 0;
-    overflow: clip;
+    overflow: visible;
+    /* Crucial for sticky positioned children */
     height: 100vh;
+    /* Fallback min-height */
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
 .sticky-wrapper {
@@ -579,6 +586,7 @@ body:hover .cursor {
     display: flex;
     align-items: center;
     overflow: hidden;
+    width: 100%;
 }
 
 .horizontal-scroll-container {
@@ -587,7 +595,7 @@ body:hover .cursor {
     padding: 0 5vw;
     gap: 8vw;
     will-change: transform;
-    transition: transform 0.1s linear;
+    /* Removed transition as it causes lag with scroll-triggered JS updates */
 }
 
 .scroll-panel {
@@ -693,12 +701,24 @@ body:hover .cursor {
     text-align: center;
     border-radius: 4px;
     backdrop-filter: blur(10px);
-    transition: transform 0.4s var(--ease-out-expo), border-color 0.4s ease;
+    transition: all 0.4s var(--ease-out-expo);
+    cursor: default;
 }
 
 .stat-box:hover {
+    background: #ffcc00;
+    /* Solid Yellow */
     transform: translateY(-5px);
-    border-color: rgba(212, 175, 55, 0.3);
+    border-color: #ffcc00;
+}
+
+.stat-box:hover .stat-number,
+.stat-box:hover .stat-label {
+    color: #000 !important;
+}
+
+.stat-box:hover .stat-plus {
+    color: #000 !important;
 }
 
 .stat-number {
@@ -715,12 +735,134 @@ body:hover .cursor {
     vertical-align: super;
 }
 
+.about-text-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+}
+
+.about-info-box {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem;
+    border-radius: 4px;
+    transition: all 0.4s var(--ease-out-expo);
+    cursor: default;
+}
+
+.about-info-box:hover {
+    background: #ffcc00;
+    /* Solid Yellow */
+    transform: translateX(10px);
+    border-color: #ffcc00;
+}
+
+.about-info-box:hover h2,
+.about-info-box:hover p {
+    color: #000 !important;
+}
+
+.about-info-box:hover .stroke-text {
+    -webkit-text-stroke: 1px #000;
+}
+
+/* --- CORE VALUES SLIDER --- */
+.values-slider-wrapper {
+    width: 100vw;
+    margin-left: calc(-5vw - (100vw - 100%) / 2);
+    /* Break out of container */
+    position: relative;
+    padding: 2.5rem 0;
+    overflow: hidden;
+}
+
+.values-slider-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: 1.5rem 0;
+    gap: 4rem;
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+    -ms-overflow-style: none;
+    /* Hide scrollbar IE/Edge */
+}
+
+.values-slider-container::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
+}
+
+.slider-spacer {
+    flex: 0 0 35vw;
+    /* Half viewport minus half tile width approximately */
+}
+
+.value-tile {
+    flex: 0 0 300px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 3rem 2rem;
+    border-radius: 4px;
+    transition: all 0.5s var(--ease-out-expo);
+    scroll-snap-align: center;
+    opacity: 0.4;
+    transform: scale(0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.value-tile h3 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    transition: color 0.4s ease;
+}
+
+.value-tile p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 0.95rem;
+    transition: color 0.4s ease;
+}
+
+/* Active Center Tile */
+.value-tile.active {
+    background: #ffcc00;
+    /* Solid Yellow */
+    border-color: #ffcc00;
+    opacity: 1;
+    transform: scale(1.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+.value-tile.active h3,
+.value-tile.active p {
+    color: #000 !important;
+}
+
+.slider-instructions {
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.6;
+    margin-top: 2rem;
+}
+
 .stat-label {
     font-size: 1.1rem;
     color: var(--text-muted);
     font-weight: 600;
     letter-spacing: 1px;
     text-transform: uppercase;
+    transition: color 0.4s ease;
 }
 
 @media (max-width: 1024px) {
@@ -840,19 +982,20 @@ body:hover .cursor {
 
 .accordion-image-preview {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 400px;
-    height: 500px;
+    top: 50%;
+    right: 5vw;
+    left: auto;
+    width: 35vw;
+    height: 70vh;
     pointer-events: none;
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
-    transition: opacity 0.4s, transform 0.6s var(--ease-out-expo);
+    transform: translateY(-50%) scale(0.9);
+    transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
     background-size: cover;
     background-position: center;
     z-index: 1;
-    filter: grayscale(50%);
     border-radius: 4px;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
 }
 
 /* --- CONTACT SECTION --- */
@@ -1175,10 +1318,11 @@ body:hover .cursor {
 
     /* Fix all massive headline text overflow */
     .massive-text {
-        font-size: clamp(1.8rem, 10vw, 6rem);
+        font-size: clamp(2rem, 10vw, 5rem);
         width: 100%;
-        letter-spacing: -1px;
-        overflow: hidden;
+        letter-spacing: -2px;
+        overflow: visible;
+        display: block;
     }
 
     /* THE KEY FIX: Override width:max-content on mobile */
@@ -1188,11 +1332,19 @@ body:hover .cursor {
     .massive-text .line-3 {
         width: 100% !important;
         max-width: 100% !important;
-        overflow: hidden;
+        overflow: visible;
         padding-right: 0;
         padding-left: 0 !important;
         /* Remove desktop indentation */
-        white-space: normal;
+        white-space: nowrap;
+        font-size: clamp(1.5rem, 9.5vw, 3rem);
+        word-break: normal;
+    }
+
+    /* Inner page specific overrides for massive text */
+    .inner-page .massive-text {
+        font-size: clamp(2.5rem, 15vw, 5rem);
+        margin-top: 2rem;
     }
 
     .massive-text .reveal-up {
@@ -1268,6 +1420,29 @@ body:hover .cursor {
         width: 100%;
         text-align: center;
     }
+
+    /* Values Slider Mobile Fixes */
+    .values-slider-wrapper {
+        padding: 1rem 0;
+    }
+
+    .values-slider-container {
+        gap: 2rem;
+    }
+
+    .value-tile {
+        flex: 0 0 280px;
+        opacity: 0.8;
+        transform: scale(0.95);
+    }
+
+    .value-tile.active {
+        transform: scale(1);
+    }
+
+    .slider-spacer {
+        flex: 0 0 10vw;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1293,13 +1468,7 @@ body:hover .cursor {
     }
 }
 
-/* --- INNER PAGE HEADER & NAVIGATION --- */
-.inner-page .premium-nav {
-    background: rgba(5, 5, 5, 0.8);
-    backdrop-filter: blur(10px);
-    mix-blend-mode: normal;
-    padding: 1.5rem 5vw;
-}
+/* --- INNER PAGE HEADER --- */
 
 .page-header {
     padding: 15vh 0 10vh;
